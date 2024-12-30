@@ -1,0 +1,81 @@
+// todo list
+
+todos [icon: list]{
+_id string pk
+content string
+complete boolean
+subTodos ObjectId[] subTodos
+createdBY ObjectId user
+createdAt Date
+updatedAt Date
+}
+users [icon: user] {
+  _id string pk
+  username string
+  email string
+  password string
+}
+subTodos [icon: list]{
+_id string pk
+content string
+complete boolean
+createdBY ObjectId user
+createdAt Date
+updatedAt Date
+}
+
+todos.subTodos < subTodos._id
+todos.createdBY - users._id
+subTodos.createdBY - users._id
+
+//**************
+ecommerce
+
+users [icon: user]{
+  _id string pk
+  username string
+  email string
+  password string
+}
+products [icon: box]{
+_id string pk
+name string
+description string
+productImage string
+price number
+stock number
+category ObjectId users
+owner ObjectId users
+createdAt Date
+updatedAt Date
+}
+categories [icon: package]{
+  _id string pk
+  name string
+  createdAt Date
+  updatedAt Date
+}
+orderItems[icon: list]{
+_id string pk
+productId ObjectId products
+quantity number
+}
+order[icon: list]{
+_id string pk
+customer ObjectId users
+orderItems ObjectId[] orderItems
+address string
+status enum "PENDING","CANCELLED","DELIVERD"
+paymentId string
+createdAt Date
+updatedAt Date
+}
+
+products.category - categories._id
+products.owner - users._id
+orderItems.productId - products._id
+order.customer - users._id
+order.orderItems < orderItems._id
+
+//**********
+
